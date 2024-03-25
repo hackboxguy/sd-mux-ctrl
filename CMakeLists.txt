@@ -10,7 +10,7 @@ add_executable(${COMPONENT_NAME} ${SOURCES})
 
 # Specify component's dependency.
 target_link_libraries(${COMPONENT_NAME} ftdi1 popt)
-install(TARGETS ${COMPONENT_NAME} DESTINATION usr/bin/)
+install(TARGETS ${COMPONENT_NAME} DESTINATION usr/sbin/)
 
 #file(GLOB  INSTALLFILES "*.conf")
 #install(FILES ${INSTALLFILES} DESTINATION etc/supervisor.d/)
