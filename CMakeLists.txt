@@ -12,7 +12,7 @@ add_executable(${COMPONENT_NAME} ${SOURCES})
 target_link_libraries(${COMPONENT_NAME} ftdi1 popt)
 install(TARGETS ${COMPONENT_NAME} DESTINATION sbin)
 
-file(GLOB  SCRIPTFILES "*.sh"
+file(GLOB  SCRIPTFILES "*.sh")
 install(PROGRAMS ${SCRIPTFILES} DESTINATION sbin)
 
 #for cross compiling
