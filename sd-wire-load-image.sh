@@ -45,12 +45,20 @@ if [ $? = 0 ]; then
 	echo -n "Checking zip Health : "
 	unzip -t $1 1>/dev/null 2>/dev/null
 	if [ $? = 0 ]; then
+		unzip -l $1 | tail -1 | grep -q "1 file"
+		[ $? != 0 ] && echo "error! contains multiple files" && exit 1
 		echo "ok"
 	else
 		echo "error! exiting"
 		exit 1
 	fi
 	IMG_COMPRESSION="zip"
+fi
+
+echo $FILEMSG | grep "DOS/MBR boot sector" > /dev/null
+if [ $? = 0 ]; then
+	echo "This is a raw image : ok"
+	IMG_COMPRESSION="raw"
 fi
 
 if [ $IMG_COMPRESSION = "none" ]; then
@@ -127,7 +135,10 @@ elif [ $IMG_COMPRESSION = "gz" ]; then
 elif [ $IMG_COMPRESSION = "zip" ]; then
 	#gzip -dc $1 > $SDWIRENODE
 	unzip -p $1 > $SDWIRENODE
+elif [ $IMG_COMPRESSION = "raw" ]; then
+	cat $1 > $SDWIRENODE
 fi
+
 sync
 echo "done"
 
